@@ -1,0 +1,3 @@
+[submodule "documents/HgbLabReportDE/src"]
+	path = documents/HgbLabReportDE/src
+	url = https://github.com/julianjany/gp2-01.git
