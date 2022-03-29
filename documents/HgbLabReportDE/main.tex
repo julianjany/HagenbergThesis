@@ -17,6 +17,7 @@
 %%%-----------------------------------------------------------------------------
 
 \RequirePackage[utf8]{inputenc} % bei Verw. von lualatex oder xelatex entfernen!
+\usepackage{listings}
 
 \renewcommand{\chapter}[1]{} % Deaktiviere den \chapter Befehl
 \graphicspath{{images/}}     % Verzeichnis mit Bildern und Grafiken
@@ -39,16 +40,55 @@
 %%%-----------------------------------------------------------------------------
 
 \begin{abstract}\noindent
-\ldots
+\dots
 \end{abstract}
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der ersten Aufgabe}
+\lstset{language=C++,
+		basicstyle=\ttfamily\footnotesize,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{green}\ttfamily,
+		morecomment=[l][\color{magenta}]{\#}
+}
+
+\section{\dots like Bunnies}
+
+\subsection{Code}
+
+\lstinputlisting[caption=TMFs.h, language={[11]C++}]{src/Fibonacci/TMFs.h}
+\lstinputlisting[caption=Fibonacci.h, language={[11]C++}]{src/Fibonacci/Fibonacci.h}
+\lstinputlisting[caption=main.cpp, language={[11]C++}]{src/Fibonacci/main.cpp}
+
+\subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{01_fib_test}
+\caption{Testausgabe Fibonacci}
+\label{fig:01_fib_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der zweiten Aufgabe}
+\section{1, 2, 3, 4, 5, 6, 7, \dots}
+
+\subsection{Lösungsidee}
+
+\subsection{Code}
+
+\subsection{Test}
+
+%%%-----------------------------------------------------------------------------
+
+\section{Counters off the Shelf}
+
+\subsection{Lösungsidee}
+
+\subsection{Code}
+
+\subsection{Test}
 
 %%%-----------------------------------------------------------------------------
 
