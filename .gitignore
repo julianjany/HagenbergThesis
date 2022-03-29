@@ -12,3 +12,6 @@
 *.tps
 *.tcp
 
+main.pdf
+main.fdb_latexmk
+main.fls
