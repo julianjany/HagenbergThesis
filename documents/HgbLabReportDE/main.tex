@@ -66,7 +66,7 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=.95\textwidth]{01_fib_test}
-\caption{Testausgabe Fibonacci}
+\caption{Testausgabe: Fibonacci}
 \label{fig:01_fib_test}
 \end{figure}
 
@@ -76,9 +76,33 @@
 
 \subsection{Lösungsidee}
 
+Ein Counter hat zwei dynamisch gebundene Methoden, welche von ableitenden Klassen 
+überschrieben werden können. Die Methode \texttt{protected T get\_step\_size()} die 
+StepSize des Counters liefert und die Methode \texttt{public void increment()} die 
+den aktuellen Counter-Value um die StepSize inkrementiert. 
+Der \texttt{BoundedCounter} überschreibt \texttt{increment()} und verhindert, 
+dass der \texttt{bound} überschritten wird. 
+Der \texttt{VarIncrement\-Counter} überschreibt \texttt{get\_step\_size()}, um 
+die StepSize zu ändern.
+
 \subsection{Code}
 
+\lstinputlisting[caption=Counter.h, language={[11]C++}]{src/Counters/Counter.h}
+\lstinputlisting[caption=BoundedCounter.h, language={[11]C++}]{src/Counters/BoundedCounter.h}
+\lstinputlisting[caption=VarIncrementCounter.h, language={[11]C++}]{src/Counters/VarIncrementCounter.h}
+\lstinputlisting[caption=Configurations.h, language={[11]C++}]{src/Counters/Configurations.h}
+\lstinputlisting[caption=CounterTests.h, language={[11]C++}]{src/Counters/CounterTests.h}
+\lstinputlisting[caption=CounterTests.cpp, language={[11]C++}]{src/Counters/CounterTests.cpp}
+\lstinputlisting[caption=main.cpp, language={[11]C++}]{src/Counters/main.cpp}
+
 \subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{02_counter_test}
+\caption{Testausgabe: Counter Test}
+\label{fig:02_counter_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
@@ -88,11 +112,30 @@
 
 \subsection{Code}
 
+\lstinputlisting[caption=TMFs.h, language={[11]C++}]{src/Counters/TMFs.h}
+\lstinputlisting[caption=CounterGenerator.h, language={[11]C++}]{src/Counters/CounterGenerator.h}
+\lstinputlisting[caption=GeneratorTests.h, language={[11]C++}]{src/Counters/GeneratorTests.h}
+\lstinputlisting[caption=GeneratorTests.cpp, language={[11]C++}]{src/Counters/GeneratorTests.cpp}
+
 \subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{03_generator_test}
+\caption{Testausgabe: Generator Test (Teil 1)}
+\label{fig:03_generator_test}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{04_generator_test}
+\caption{Testausgabe: Generator Test (Teil 2)}
+\label{fig:04_generator_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
-\section*{Zusammenfassung und Anmerkungen}
+% \section*{Zusammenfassung und Anmerkungen}
 
 %%%-----------------------------------------------------------------------------
 
