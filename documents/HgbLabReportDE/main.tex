@@ -70,6 +70,8 @@
 \label{fig:01_fib_test}
 \end{figure}
 
+\clearpage
+
 %%%-----------------------------------------------------------------------------
 
 \section{1, 2, 3, 4, 5, 6, 7, \dots}
@@ -77,13 +79,15 @@
 \subsection{Lösungsidee}
 
 Ein Counter hat zwei dynamisch gebundene Methoden, welche von ableitenden Klassen 
-überschrieben werden können. Die Methode \texttt{protected T get\_step\_size()} die 
-StepSize des Counters liefert und die Methode \texttt{public void increment()} die 
-den aktuellen Counter-Value um die StepSize inkrementiert. 
+überschrieben werden können. Die Methode \texttt{protected T get\_step\_size()} 
+liefert die Schrittgröße des Counters. Die Methode \texttt{public void increment()} 
+inkrementiert den aktuellen Counter-Value um die Schrittgröße. 
 Der \texttt{BoundedCounter} überschreibt \texttt{increment()} und verhindert, 
-dass der \texttt{bound} überschritten wird. 
-Der \texttt{VarIncrement\-Counter} überschreibt \texttt{get\_step\_size()}, um 
-die StepSize zu ändern.
+dass der \texttt{bound} überschritten wird. Dies wird erreicht indem die 
+Implementierung der Basisklasse aufgerufen wird und der Counter-Value im Falle 
+einer Überscheitung des bounds auf den vorherigen Wert zurückgesetzt wird.
+Der \texttt{VarIncrement\-Counter} überschreibt \texttt{get\_step\_size()} und 
+ändert so die Schrittgröße des Counters.
 
 \subsection{Code}
 
@@ -97,18 +101,43 @@ die StepSize zu ändern.
 
 \subsection{Test}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=.95\textwidth]{02_counter_test}
 \caption{Testausgabe: Counter Test}
 \label{fig:02_counter_test}
 \end{figure}
 
+\clearpage
+
 %%%-----------------------------------------------------------------------------
 
 \section{Counters off the Shelf}
 
 \subsection{Lösungsidee}
+
+\subsubsection{Template-Parameter des Generators}
+
+\lstinputlisting[caption=CounterGenerator.h, language={[11]C++}, firstnumber=22, firstline=22, lastline=26]{src/Counters/CounterGenerator.h}
+
+Alle Template-Parameter, bis auf den Datentyp des Zählers, haben einen Default-Wert.
+
+\subsubsection{Optional}
+
+Das \texttt{struct} \texttt{Optional} bzw. die Sub-structs \texttt{Empty} 
+und \texttt{Value} haben eine Konstante \texttt{has\_value}, 
+mit der gerüft werden kann, ob der übergebene Parameter einen 
+gültigen Wert enthält bzw. ob der übergebene Parameter bei der 
+Generierung der Konfiguration berücksichtigt werden soll. 
+Dies ist für diesen Anwendungsfall sinnvoll, weil so \zB 
+für den letzten Template-Parameter explizit ein "Wert" übergeben 
+werden kann, während für den vorletzten Parameter der Default-Wert 
+erhalten werden kann indem \texttt{Empty} übergeben wird.
+
+\subsubsection{Hierarchie}
+
+Die Verschachtelung \bzw die Ableitungshierarchie wird mittels der 
+TMF \texttt{IF} aufgebaut.
 
 \subsection{Code}
 
