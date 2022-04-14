@@ -24,7 +24,7 @@
 \ExecuteBibliographyOptions{backref=false} % Keine Rückreferenzen bei Quellen
 
 %%%-----------------------------------------------------------------------------
-\setcounter{chapter}{1}	% <----- Auf die Übungsnummer setzen
+\setcounter{chapter}{2}	% <----- Auf die Übungsnummer setzen
 %%%-----------------------------------------------------------------------------
 
 \author{Julian Jany}                        % Name
@@ -38,21 +38,90 @@
 \maketitle
 %%%-----------------------------------------------------------------------------
 
-\begin{abstract}\noindent
-\ldots
-\end{abstract}
+% \renewcommand{\abstractname}{Anmerkungen}
+% \begin{abstract}\noindent
+% \ldots
+% \end{abstract}
+
+%%%-----------------------------------------------------------------------------
+\lstset{language=C++,
+		basicstyle=\ttfamily\footnotesize,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{green}\ttfamily,
+		morecomment=[l][\color{magenta}]{\#}
+}
+%%%-----------------------------------------------------------------------------
+
+
+\section{JSON Validator}
+
+\subsection{Lösungsidee}
+
+Die JSON Grammatik Beschreibung auf \url{https://www.json.org} wurde in die entsprechende Notation von \texttt{Boost.Spirit} transformiert.
+Da nur Parsing ohne semantische Aktionen gefordert war und "Edge-cases" ignoriert werden konnten, war die Implementierung unkompliziert.
+
+\subsection{Code}
+
+\lstinputlisting[caption=Json.h, language={[11]C++}]{src/JsonValidator/Json.h}
+\lstinputlisting[caption=main.cpp, language={[11]C++}]{src/JsonValidator/main.cpp}
+
+\clearpage
+
+\subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{json_test}
+\caption{Testausgabe der JsonValidator-Tests}
+\label{fig:json_test}
+\end{figure}
+
+\clearpage
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der ersten Aufgabe}
+\section{Mini-LOLCODE with Boost.Spirit}
+
+\subsection{Lösungsidee}
+
+\subsubsection{Consolen-Ausgabe}
+
+Die korrekte Ausgabe von Zeilenumbrüchen wurde so umgesetzt, dass anstelle eines optionalen "!"-Literals eine Regel "! oder eps" verwendet wurde. So kann der Epsilon-Ausdruck mit der sematischen Aktion \texttt{print\_newline()} versehen werden.
+
+\subsubsection{Kommentare}
+
+Zum Überspringen von Kommentaren im Quellcode werden, wie es \texttt{Boost.Spirit} vorsieht, sogenannte \texttt{Skipper} eingesetzt. Dadurch kann im Prinzip eine kleine Grammatik zur Beschreibung der Kommentare verwendet werden.
+
+\subsubsection{Variablen}
+
+Variablen werden in einer \texttt{map} verwaltet und von ihrem Bezeichner auf den Wert abgebildet. Sie können mit den entsprechenden sematischen Aktionen geschrieben (\texttt{set\_\-var\-iable()}) und "gelesen" (\texttt{print\_variable()}) werden.
+
+\subsubsection{Arithmetische und Boolsche Operationen}
+
+Implementiert wurden alle einfachen arithmetischen Operationen resp. Summe, Differenz, Produkt und Quotient. Die implementierten boolschen Operationen sind Und, Oder, exklusiv-Oder und Negation.
+Dabei wurde immer nach dem selben Schema vorgegangen. Der erste Ausdruck der Operation wird dem Rückgabeparameter der Regel zugewiesen, anschließend wird der zweite Ausdruck mit diesem verknüpft und der Rückgabeparameter überschrieben.
+
+
+\subsection{Code}
+
+\lstinputlisting[caption=LOLCode.h, language={[11]C++}]{src/LOLCode/LOLCode.h}
+\lstinputlisting[caption=main.cpp, language={[11]C++}]{src/LOLCode/main.cpp}
+
+\clearpage
+
+\subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.95\textwidth]{lolcode_test}
+\caption{Testausgabe der LOLCode-Tests}
+\label{fig:lolcode_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der zweiten Aufgabe}
-
-%%%-----------------------------------------------------------------------------
-
-\section*{Zusammenfassung und Anmerkungen}
+%\section*{Zusammenfassung und Anmerkungen}
 
 %%%-----------------------------------------------------------------------------
 
