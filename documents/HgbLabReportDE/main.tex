@@ -24,7 +24,7 @@
 \ExecuteBibliographyOptions{backref=false} % Keine Rückreferenzen bei Quellen
 
 %%%-----------------------------------------------------------------------------
-\setcounter{chapter}{1}	% <----- Auf die Übungsnummer setzen
+\setcounter{chapter}{3}	% <----- Auf die Übungsnummer setzen
 %%%-----------------------------------------------------------------------------
 
 \author{Julian Jany}                        % Name
@@ -38,21 +38,81 @@
 \maketitle
 %%%-----------------------------------------------------------------------------
 
-\begin{abstract}\noindent
-\ldots
-\end{abstract}
+\lstset{language=[sharp]C,
+		basicstyle=\ttfamily\footnotesize,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{green}\ttfamily,
+		morecomment=[l][\color{magenta}]{\#}
+}
+\lstset{language=XML,
+		basicstyle=\ttfamily\footnotesize,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{green}\ttfamily,
+		morecomment=[l][\color{magenta}]{\#}
+}
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der ersten Aufgabe}
+\section{One, to generate them all}
+
+\subsection{Lösungsidee}
+
+Das \texttt{Model.xml} wird mittels von .NET bereitgestellten Methoden geparst und in einen "Xml-Objektgraphen" transformiert. 
+Dieser Graph wird "depth-first" iteriert; dabei werden die Xml-Knoten/Elemente in ihre entsprechenden Sourcecode-Teile übersetzt.
+Über die Properties einer Klasse muss zweimal iteriert werden, um die Deklarationen der Properties und die ToString-Methode der Klasse generieren zu können.
+
+\subsection{Code}
+
+\lstinputlisting[caption=Model.xml, language={XML}]{src/ClassGenerator/Model.xml}
+\lstinputlisting[caption=ClassGenerator.tt, language={[sharp]C}]{src/ClassGenerator/ClassGenerator.tt}
+\lstinputlisting[caption=ClassGenerator.cs (generated), language={[sharp]C}]{src/ClassGenerator/ClassGenerator.cs}
+\lstinputlisting[caption=Program.cs, language={[sharp]C}]{src/ClassGenerator/Program.cs}
+
+\subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.3\textwidth]{class_gen_test}
+\caption{Testausgabe des ClassGenerator Projekts}
+\label{fig:class_gen_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der zweiten Aufgabe}
+\section{Clone ‘Em All!}
+
+\subsection{Lösungsidee}
+
+\subsection{Code}
+
+\lstinputlisting[caption=A.cs, language={[sharp]C}]{src/CloningGenerator/A.cs}
+\lstinputlisting[caption=B.cs, language={[sharp]C}]{src/CloningGenerator/B.cs}
+\lstinputlisting[caption=CloningGenerator.tt, language={[sharp]C}]{src/CloningGenerator/CloningGenerator.tt}
+\lstinputlisting[caption=CloningGenerator.cs (generated), language={[sharp]C}]{src/CloningGenerator/CloningGenerator.cs}
+\lstinputlisting[caption=Program.cs, language={[sharp]C}]{src/CloningGenerator/Program.cs}
+
+\subsection{Test}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.3\textwidth]{cloning_gen_test}
+\caption{Testausgabe des CloningGenerator Projekts}
+\label{fig:cloning_gen_test}
+\end{figure}
 
 %%%-----------------------------------------------------------------------------
 
-\section*{Zusammenfassung und Anmerkungen}
+\section{SVG Generator}
+
+\subsection{Lösungsidee}
+\subsection{Code}
+\subsection{Test}
+
+%%%-----------------------------------------------------------------------------
+
+%\section*{Zusammenfassung und Anmerkungen}
 
 %%%-----------------------------------------------------------------------------
 
