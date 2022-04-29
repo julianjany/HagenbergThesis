@@ -24,7 +24,7 @@
 \ExecuteBibliographyOptions{backref=false} % Keine Rückreferenzen bei Quellen
 
 %%%-----------------------------------------------------------------------------
-\setcounter{chapter}{1}	% <----- Auf die Übungsnummer setzen
+\setcounter{chapter}{2}	% <----- Auf die Übungsnummer setzen
 %%%-----------------------------------------------------------------------------
 
 \author{Julian Jany}                        % Name
@@ -44,7 +44,445 @@
 
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der ersten Aufgabe}
+\section{OCR from scratch -- Basic implementation}
+
+\subsection{Problembeschreibung}
+
+Es soll ein \texttt{ImageJ OCR-Plugin} entwickelt werden. Das Plugin soll im ersten Schritt die einzelnen Buchstaben aus einem Bild extrahieren. Anschließend soll der Nutzer einen Referenzbuchstaben wählen können; alle diesem Referenzbuchstaben ähnlichen Buchstaben sollen im Text markiert werden.
+
+\subsection{Lösungsbeschreibung}
+
+\subsubsection{Schwellenwertbildung}
+
+Das jedem Pixel im Eingabe-Bild wird anhand eines Schwellenwerts einer von zwei Werten ('Vordergrung' / 'Hintergrund') zugewiesen, um die folgenden Verarbeitungsschritte zu vereinfachen.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{thresholding}
+\caption{Teil des Eingabe-Bildes vor (links) und nach (rechts) der Schwellenwertbildung}
+\label{fig:thresholding}
+\end{figure}
+
+\subsubsection{Extraktion der Buchstaben}
+
+Zur Extraktion der Buchstaben wird die sog. \textit{fire through} Methode angewandt. Im ersten Schritt wird der Text in seine einzelnen Zeilen aufgeteilt. Anschließend wird jede Zeile in die enthaltenen Buchstaben aufgeteilt. Abschließend wird die Bounding-Box jedes Buchstaben oben und unten "zugeschnitten"; auf diese Weise ist die Größe der Bounding-Boxen der Buchstaben unabhängig von den anderen Buchstaben in derselben Zeile.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{character_detection}
+\caption{Teil des Eingabe-Bildes, extrahierte Buchstaben sind hervorgehoben. (Bounding-Box: gelblich markiert; Umrandung außerhalb der Buchstaben: rötlich markiert)}
+\label{fig:character_detection}
+\end{figure}
+
+\subsubsection{Referenzbestimmung}
+
+Der Benutzer wählt einen Referenzbuchstaben durch Angabe von Zeilen- und Spaltennummer. Für den gewählten Buchstaben werden die implementierten Features berechnet und in einem Array gespeichert. Dieses Array dient als Referenzvektor zum Vergleichen der Buchstaben.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{ref_features}
+\caption{Gewählter Referenzbuchstabe mit den berechneten Feature-Werten.}
+\label{fig:ref_features}
+\end{figure}
+
+\subsubsection{Normalisierung}
+
+Alle Features weisen unterschiedliche Wertebereiche auf. Dies wird mittels Normalisierung vor der Berechnung des Korrelationskoeffizienten ausgeglichen. Es werden alle Feature-Werte für jeden Buchstaben im Bild berechnet. Anschließend wird je Feature das Arithmetische Mittel und die Standardabweichung gebildet. Die Normalisierung der Features eines konkreten Buchstaben erfolgt durch Subtraktion des jeweiligen Mittelwerts und durch Division durch die jeweilige Standardabweichung.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{norm_vect}
+\caption{Normalisierungs-Vektor.}
+\label{fig:norm_vect}
+\end{figure}
+
+\subsubsection{Korrelationskoeffizient}
+
+Für jeden Buchstaben im Bild wird die Korrelation mit dem Referenzbuchstaben berechnet. Die Berechnung des Korrelationskoeffizienten wird mit normalisierten Feature-Werten durchgeführt.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{correlation_coeff}
+\caption{Visualisierung der Korrelationskoeffizienten (0 entspricht -1; 255 entspricht +1).}
+\label{fig:correlation_coeff}
+\end{figure}
+
+Im letzten Schritt der OCR definiert der Nutzer einen Schwellenwert für den Korrelationskoeffizienten; alle Buchstaben die diesen Wert überschreiten werden im Bild markiert.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{recognized_chars}
+\caption{Visualisierung der erkannten Buchstaben (ähnlich zu 'f').}
+\label{fig:recognized_chars}
+\end{figure}
+
+\subsection{Implementierung}
+
+Hier werden interessante Code-Teile der Implementierung inkludiert.
+
+\subsubsection{Extraktion der Buchstaben}
+
+\begin{program}
+\caption{\texttt{splitLine(...)}}
+\label{prog:extract-01}
+\begin{JavaCode}
+public Vector<SubImageRegion> splitLine(int[][] inImg, int width, int height, int BG_val, int FG_val) {
+	boolean insideEmptyRegion = isEmptyRow(inImg, width, 0, BG_val);
+	int lineRowStart = 0;
+	Vector<SubImageRegion> rows = new Vector<>();
+
+	for (int curRow = 1; curRow < height; curRow++) {
+		if (insideEmptyRegion != isEmptyRow(inImg, width, curRow, BG_val)) {
+			if (insideEmptyRegion) {
+				lineRowStart = curRow;
+			} else {
+				rows.add(new SubImageRegion(0, lineRowStart, width, curRow - lineRowStart, inImg));
+			}
+			insideEmptyRegion = !insideEmptyRegion;
+		}
+	}
+
+	return rows;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{shrinkCharVertically(...)}}
+\label{prog:extract-02}
+\begin{JavaCode}
+public SubImageRegion shrinkCharVertically(SubImageRegion charImg, int BG_val) {
+	int lineRowStart = 0;
+	boolean insideEmptyRegion = isEmptyRow(charImg.subImgArr, charImg.width, lineRowStart, BG_val);
+	if (insideEmptyRegion) {
+		lineRowStart++;
+		while (lineRowStart < charImg.height && isEmptyRow(charImg.subImgArr, charImg.width, lineRowStart, BG_val)) {
+			lineRowStart++;
+		}
+	}
+
+	int lineRowEnd = charImg.height - 1;
+	insideEmptyRegion = isEmptyRow(charImg.subImgArr, charImg.width, lineRowEnd, BG_val);
+	if (insideEmptyRegion) {
+		lineRowEnd--;
+		while (lineRowEnd >= 0 && isEmptyRow(charImg.subImgArr, charImg.width, lineRowEnd, BG_val)) {
+			lineRowEnd--;
+		}
+	}
+
+	SubImageRegion shrunk = new SubImageRegion(0, lineRowStart, charImg.width, lineRowEnd - lineRowStart + 1, charImg.subImgArr);
+	shrunk.startX = charImg.startX;
+	shrunk.startY = charImg.startY + lineRowStart;
+	return shrunk;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{splitCharactersVertically(...)}}
+\label{prog:extract-03}
+\begin{JavaCode}
+public Vector<SubImageRegion> splitCharactersVertically(SubImageRegion rowImage, int BG_val) {
+	boolean insideEmptyRegion = isEmptyColumn(rowImage.subImgArr, rowImage.height, 0, BG_val);
+	int lineColStart = 0;
+	Vector<SubImageRegion> cols = new Vector<>();
+
+	for (int curCol = 1; curCol < rowImage.width; curCol++) {
+		if (insideEmptyRegion != isEmptyColumn(rowImage.subImgArr, rowImage.height, curCol, BG_val)) {
+			if (insideEmptyRegion) {
+				lineColStart = curCol;
+			} else{
+				SubImageRegion col = new SubImageRegion(lineColStart, 0, curCol-lineColStart, rowImage.height, rowImage.subImgArr);
+				col.startY = rowImage.startY;
+				cols.add(
+						shrinkCharVertically(col, BG_val));
+			}
+			insideEmptyRegion = !insideEmptyRegion;
+		}
+	}
+
+	return cols;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{splitCharacters(...)}}
+\label{prog:extract-04}
+\begin{JavaCode}
+public Vector<Vector<SubImageRegion>> splitCharacters(int[][] inImg, int width, int height, int BG_val, int FG_val) {
+	Vector<Vector<SubImageRegion>> returnCharMatrix = new Vector<Vector<SubImageRegion>>();
+
+	Vector<SubImageRegion> lines = splitLine(inImg, width, height, BG_val, FG_val);
+	for (SubImageRegion line : lines) {
+		returnCharMatrix.add(
+				splitCharactersVertically(line, BG_val));
+	}
+
+	return returnCharMatrix;
+}
+\end{JavaCode}
+\end{program}
+
+\subsubsection{Referenzbestimmung}
+
+\begin{program}
+\caption{\texttt{calcFeatureArr(...)}}
+\label{prog:calc-feature-arr}
+\begin{JavaCode}
+double[] calcFeatureArr(SubImageRegion region, int FGval, Vector<ImageFeatureBase> featuresToUse) {
+	double[] featureResArr = new double[featuresToUse.size()];
+	int idx = 0;
+	for (ImageFeatureBase ifb : featuresToUse) {
+		featureResArr[idx] = ifb.CalcFeatureVal(region, FGval);
+		idx++;
+	}
+	return featureResArr;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{ImageFeature: Circularity}}
+\label{prog:img-feature-circularity}
+\begin{JavaCode}
+class ImageFeature_Circularity extends ImageFeatureBase {
+	public ImageFeature_Circularity() {
+		this.description = "circularity";
+	}
+
+	@Override
+	public double CalcFeatureVal(SubImageRegion imgRegion, int FG_val) {
+		final int scaleFactor = (int)Math.ceil(128. / imgRegion.width);
+		int[][] upscaledImg =
+				SubImageRegion.growBorder(
+						SubImageRegion.upscale(imgRegion.subImgArr, scaleFactor),
+						255-FG_val);
+		int[][] perimeterImg = SubImageRegion.dilateAndSubtract(upscaledImg, FG_val);
+
+		int area = SubImageRegion.foregroundPixelCount(upscaledImg, FG_val);
+		int perimeter = SubImageRegion.foregroundPixelCount(perimeterImg, FG_val);
+
+		return (4. * Math.PI * (double)area) / ((double)perimeter*(double)perimeter);
+	}
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{upscale(...)}}
+\label{prog:upscale}
+\begin{JavaCode}
+public static int[][] upscale(int[][] img, int scaleFactor) {
+	final int width = img.length;
+	final int height = img[0].length;
+	final int newWidth  = width * scaleFactor;
+	final int newHeight = height * scaleFactor;
+	int[][] upscaledArr = new int[newWidth][newHeight];
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			for (int xOff = 0; xOff < scaleFactor; xOff++) {
+				for (int yOff = 0; yOff < scaleFactor; yOff++) {
+					upscaledArr[x*scaleFactor+xOff][y*scaleFactor+yOff] = img[x][y];
+				}
+			}
+		}
+	}
+
+	return upscaledArr;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{growBorder(...)}}
+\label{prog:grow-border}
+\begin{JavaCode}
+public static int[][] growBorder(int[][] img, int BG_VAL) {
+	final int width = img.length;
+	final int height = img[0].length;
+	final int newWidth  = width + 2;
+	final int newHeight = height + 2;
+	int[][] borderArr = new int[newWidth][newHeight];
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			borderArr[x+1][y+1] = img[x][y];
+		}
+	}
+
+	for (int x = 0; x < newWidth; x++) {
+		borderArr[x][0] = BG_VAL;
+		borderArr[x][newHeight-1] = BG_VAL;
+	}
+	for (int y = 0; y < newHeight; y++) {
+		borderArr[0][y] = BG_VAL;
+		borderArr[newWidth-1][y] = BG_VAL;
+	}
+
+	return borderArr;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{dilateAndSubtract(...)}}
+\label{prog:dilate-and-subtract}
+\begin{JavaCode}
+public static int[][] dilateAndSubtract(int[][] img, int FG_VAL) {
+	final int width = img.length;
+	final int height = img[0].length;
+	int[][] dilated = new int[width][height];
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			if (img[x][y] == FG_VAL) {
+				dilated[x][y] = 255-FG_VAL;
+				continue;
+			}
+
+			int x_ = x-1;
+			int y_ = y;
+			if (x_ >= 0 && x_ < width &&
+				y_ >= 0 && y_ < height &&
+				img[x_][y_] == FG_VAL) {
+				dilated[x][y] = FG_VAL;
+				continue;
+			}
+			x_ = x+1;
+			y_ = y;
+			if (x_ >= 0 && x_ < width &&
+				y_ >= 0 && y_ < height &&
+				img[x_][y_] == FG_VAL) {
+				dilated[x][y] = FG_VAL;
+				continue;
+			}
+			x_ = x;
+			y_ = y-1;
+			if (x_ >= 0 && x_ < width &&
+				y_ >= 0 && y_ < height &&
+				img[x_][y_] == FG_VAL) {
+				dilated[x][y] = FG_VAL;
+				continue;
+			}
+			x_ = x;
+			y_ = y+1;
+			if (x_ >= 0 && x_ < width &&
+				y_ >= 0 && y_ < height &&
+				img[x_][y_] == FG_VAL) {
+				dilated[x][y] = FG_VAL;
+				continue;
+			}
+			dilated[x][y] = 255-FG_VAL;
+		}
+	}
+
+	return dilated;
+}
+\end{JavaCode}
+\end{program}
+
+Die Circularity wird berechnet indem Fläche und Umfang abgeschätzt und dann ins Verhältnis gesetzt werden. Für die Abschätzung des Umfangs wird das Bild des Buchstaben hochskaliert und dann ein Bild der Umrandung berechnet. Die Anzahl der Vordergrung-Pixel dient als Schätzer für dern Umfang.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.85\textwidth]{area_perimeter}
+\caption{Fläche und Umfang verschiedener beispielhafter Buchstaben.}
+\label{fig:area_perimeter}
+\end{figure}
+
+\subsubsection{Normalisierung}
+
+\begin{program}
+\caption{\texttt{calculateNormArr(...)}}
+\label{prog:calc-norm-arr}
+\begin{JavaCode}
+double[][] calculateNormArr(Vector<Vector<SubImageRegion>> inputRegions, int FGval, Vector<ImageFeatureBase> featuresToUse) {
+	double[][] returnVect = new double[featuresToUse.size()][2];
+	int featureIdx = 0;
+	for(ImageFeatureBase feature : featuresToUse) {
+		final double mean = calculateMean(inputRegions, feature, FGval);
+		final double sigma = calculateSigma(inputRegions, feature, FGval, mean);
+		returnVect[featureIdx][0] = mean;
+		returnVect[featureIdx][1] = sigma;
+		featureIdx++;
+	}
+	return returnVect;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{calculateMean(...)}}
+\label{prog:calc-mean}
+\begin{JavaCode}
+double calculateMean(Vector<Vector<SubImageRegion>> inputRegions, ImageFeatureBase feature, int FGval) {
+	double sum = 0.0;
+	int count = 0;
+	// get all extracted chars for calc. of mean
+	for(Vector<SubImageRegion> rowVect : inputRegions) {
+		for(SubImageRegion charReg : rowVect) {
+			double curFeatureVal = feature.CalcFeatureVal(charReg, FGval);
+			sum += curFeatureVal;
+			++count;
+		}
+	}
+	return sum / count;
+}
+\end{JavaCode}
+\end{program}
+
+\begin{program}
+\caption{\texttt{calculateSigma(...)}}
+\label{prog:calc-sigma}
+\begin{JavaCode}
+double calculateSigma(Vector<Vector<SubImageRegion>> inputRegions, ImageFeatureBase feature, int FGval, double mean) {
+	double sum = 0.0;
+	int count = 0;
+	// iterate again for calc. of sigma
+	for(Vector<SubImageRegion> rowVect : inputRegions) {
+		for(SubImageRegion charReg : rowVect) {
+			final double featureDiff = mean - feature.CalcFeatureVal(charReg, FGval);
+			sum += (featureDiff*featureDiff);
+			++count;
+		}
+	}
+	return Math.sqrt(sum / count);
+}
+\end{JavaCode}
+\end{program}
+
+\subsubsection{Korrelationskoeffizient}
+
+\begin{program}
+\caption{\texttt{calcCorrelationCoefficient(...)}}
+\label{prog:calc-corr-coeff}
+\begin{JavaCode}
+double calcCorrelationCoefficient(double[] currFeatureArr, double[] refFeatureArr, double[][] normFeatureArr) {
+	double numeratorSum = 0;
+	double currSum = 0;
+	double refSum = 0;
+
+	for (int i = 0; i < refFeatureArr.length; i++) {
+		double curNorm = (currFeatureArr[i] - normFeatureArr[i][0]) / normFeatureArr[i][1];
+		double refNorm = (refFeatureArr[i] - normFeatureArr[i][0]) / normFeatureArr[i][1];
+
+		numeratorSum += curNorm*refNorm;
+		currSum += curNorm*curNorm;
+		refSum += refNorm*refNorm;
+	}
+	double corrCoeff = numeratorSum / (Math.sqrt(currSum)*Math.sqrt(refSum));
+	System.out.println(corrCoeff);
+	return corrCoeff;
+}
+\end{JavaCode}
+\end{program}
+
+
+\subsection{Tests}
+
+\subsection{Diskussion}
 
 %%%-----------------------------------------------------------------------------
 

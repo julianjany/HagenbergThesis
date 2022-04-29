@@ -124,6 +124,8 @@ keepspaces=true,%
 \lstnewenvironment{JavaCode}[1][]
 {\lstset{%
 	language=Java,
+	commentstyle=\color[rgb]{0,0.608,0.333}, % ForestGreen
+	keywordstyle=\color{blue},
 	escapeinside={/+}{+/}, % makes "/+" and "+/" available for Latex escapes (labels etc.)
 	#1}}%
 {}
