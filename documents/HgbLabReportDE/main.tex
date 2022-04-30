@@ -122,7 +122,7 @@ Hier werden interessante Code-Teile der Implementierung inkludiert.
 
 \subsubsection{Extraktion der Buchstaben}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{splitLine(...)}}
 \label{prog:extract-01}
 \begin{JavaCode}
@@ -147,7 +147,7 @@ public Vector<SubImageRegion> splitLine(int[][] inImg, int width, int height, in
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{shrinkCharVertically(...)}}
 \label{prog:extract-02}
 \begin{JavaCode}
@@ -178,7 +178,7 @@ public SubImageRegion shrinkCharVertically(SubImageRegion charImg, int BG_val) {
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{splitCharactersVertically(...)}}
 \label{prog:extract-03}
 \begin{JavaCode}
@@ -206,7 +206,7 @@ public Vector<SubImageRegion> splitCharactersVertically(SubImageRegion rowImage,
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{splitCharacters(...)}}
 \label{prog:extract-04}
 \begin{JavaCode}
@@ -224,9 +224,11 @@ public Vector<Vector<SubImageRegion>> splitCharacters(int[][] inImg, int width, 
 \end{JavaCode}
 \end{program}
 
+\clearpage
+
 \subsubsection{Referenzbestimmung}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{calcFeatureArr(...)}}
 \label{prog:calc-feature-arr}
 \begin{JavaCode}
@@ -242,7 +244,7 @@ double[] calcFeatureArr(SubImageRegion region, int FGval, Vector<ImageFeatureBas
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{ImageFeature: Circularity}}
 \label{prog:img-feature-circularity}
 \begin{JavaCode}
@@ -269,7 +271,7 @@ class ImageFeature_Circularity extends ImageFeatureBase {
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{upscale(...)}}
 \label{prog:upscale}
 \begin{JavaCode}
@@ -295,7 +297,7 @@ public static int[][] upscale(int[][] img, int scaleFactor) {
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{growBorder(...)}}
 \label{prog:grow-border}
 \begin{JavaCode}
@@ -326,7 +328,7 @@ public static int[][] growBorder(int[][] img, int BG_VAL) {
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{dilateAndSubtract(...)}}
 \label{prog:dilate-and-subtract}
 \begin{JavaCode}
@@ -387,14 +389,16 @@ Die Circularity wird berechnet indem Fläche und Umfang abgeschätzt und dann in
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.85\textwidth]{area_perimeter}
+\includegraphics[width=.7\textwidth]{area_perimeter}
 \caption{Fläche und Umfang verschiedener beispielhafter Buchstaben.}
 \label{fig:area_perimeter}
 \end{figure}
 
+\clearpage
+
 \subsubsection{Normalisierung}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{calculateNormArr(...)}}
 \label{prog:calc-norm-arr}
 \begin{JavaCode}
@@ -413,7 +417,7 @@ double[][] calculateNormArr(Vector<Vector<SubImageRegion>> inputRegions, int FGv
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{calculateMean(...)}}
 \label{prog:calc-mean}
 \begin{JavaCode}
@@ -433,7 +437,7 @@ double calculateMean(Vector<Vector<SubImageRegion>> inputRegions, ImageFeatureBa
 \end{JavaCode}
 \end{program}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{calculateSigma(...)}}
 \label{prog:calc-sigma}
 \begin{JavaCode}
@@ -455,7 +459,7 @@ double calculateSigma(Vector<Vector<SubImageRegion>> inputRegions, ImageFeatureB
 
 \subsubsection{Korrelationskoeffizient}
 
-\begin{program}
+\begin{program}[h]
 \caption{\texttt{calcCorrelationCoefficient(...)}}
 \label{prog:calc-corr-coeff}
 \begin{JavaCode}
@@ -480,13 +484,122 @@ double calcCorrelationCoefficient(double[] currFeatureArr, double[] refFeatureAr
 \end{program}
 
 
+\clearpage
+
 \subsection{Tests}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-01-A}
+\caption{Alle 'A' im Bild markiert.}
+\label{fig:test-01}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-02-I}
+\caption{Alle 'I' im Bild markiert.}
+\label{fig:test-02}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-03-e}
+\caption{Alle 'e' im Bild markiert.}
+\label{fig:test-03}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-04-t}
+\caption{Alle 't' im Bild markiert.}
+\label{fig:test-04}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-05-colon}
+\caption{Alle ':' im Bild markiert.}
+\label{fig:test-05}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-06-u}
+\caption{Alle 'u' im Bild markiert.}
+\label{fig:test-06}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.7\textwidth]{test-07-rf}
+\caption{Alle 'rf' im Bild markiert. ('rf' wird fälschlicherweise als ein zusammenhängender Buchstabe erkannt, weil sie im Eingabe-Bild überlappend sind.)}
+\label{fig:test-07}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering\small
+    \begin{tabular}{cc}
+        \FramePic{\includegraphics[width=0.5\textwidth]{consolas}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-08-consolas_mark}} \\
+        (a) & (b) \\
+		\FramePic{\includegraphics[width=0.5\textwidth]{test-08-consolas-c}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-08-consolas-i}} \\
+		(c) & (d)
+    \end{tabular}
+    \caption{Eingabe-Bild~(a); Extrahierte Buchtaben~(b); Alle 'c' markiert~(c) sowie alle 'i' markiert~(d).}
+    \label{fig:test-08}
+\end{figure}
+
+\begin{figure}[h]
+    \centering\small
+    \begin{tabular}{cc}
+        \FramePic{\includegraphics[width=0.5\textwidth]{comic_sans}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic_mark}} \\
+        (a) & (b) \\
+		\FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic-m}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic-n}} \\
+		(c) & (d)
+    \end{tabular}
+    \caption{Eingabe-Bild~(a); Extrahierte Buchtaben~(b); Alle 'm' markiert~(c) sowie alle 'n' markiert~(d).}
+    \label{fig:test-09}
+\end{figure}
+
+\begin{figure}[h]
+    \centering\small
+    \begin{tabular}{cc}
+        \FramePic{\includegraphics[width=0.5\textwidth]{Cochocib_Script_Latin_Pro}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-10-cochib_mark}} \\
+        (a) & (b) \\
+		\FramePic{\includegraphics[width=0.5\textwidth]{test-10-cochib-ipsum}} &
+        \FramePic{\includegraphics[width=0.5\textwidth]{test-10-cochib-mauris}} \\
+		(c) & (d)
+    \end{tabular}
+    \caption{Eingabe-Bild~(a); Extrahierte "Buchtaben"~(b); Alle "ipsum" markiert~(c) sowie alle "mauris" markiert~(d). (Wie erwartet kommt der Algorithmus hier an seine Grenzen; durch die stark ausgeprägten Serifen werden ganze Worte als einzelne Buchstaben erkannt.)}
+    \label{fig:test-10}
+\end{figure}
+
+\clearpage
 
 \subsection{Diskussion}
 
+\subsubsection{Welche Buchstaben können sicher erkannt werden und welche Buchstaben führen zu Problemen -- und warum?}
+
+In den durchgeführten Tests werden alle Buchstaben sehr verlässlich erkannt; vorausgesetzt, dass die \textit{fire through} Methode nur einzelne Buchstaben liefert.
+
+\subsubsection{Sind alle Schriftarten für diese Art von OCR-Strategie geeignet -- warum oder warum nicht?}
+
+Es eignen sich nicht alle Schriftarten für die Erkennung mit dem implementierten Algorithmus. Es kommt zu Problemen, wenn die Schriftart Buchstabenkombinationen enthält zwischen denen es keine "Empty Column" gibt. Dies ist vorallem bei Schriftarten mit ausgeprägten Serifen der Fall.
+
+\subsubsection{Hängt die Klassifizierungsgenauigkeit von den anderen Zeichen in der jeweiligen Zeile ab -- wenn ja, warum und wie kann dieses Problem gelöst werden?}
+
+Wird zur Extraktion der Buchstaben \textit{fire through} ohne Post-Processing eingesetzt, dann beeinflussen die konkreten in einer Zeile auftretenden Buchstaben die Klassifizierungsgenauigkeit, weil manche Features (\zB Höhe der Bounding-Box) dadurch "verfälscht" werden.
+Durch einen nachträglichen Zuschnitt der Bounding-Box oberhalb und unterhalb kann dieses Problem behoben werden. Diese Verbesserung des Algorithmus ist bereits Teil dieser Implementierung.
+
 %%%-----------------------------------------------------------------------------
 
-\section{Titel der zweiten Aufgabe}
+% \section{Titel der zweiten Aufgabe}
 
 %%%-----------------------------------------------------------------------------
 
