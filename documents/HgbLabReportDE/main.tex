@@ -576,7 +576,7 @@ double calcCorrelationCoefficient(double[] currFeatureArr, double[] refFeatureAr
         \FramePic{\includegraphics[width=0.5\textwidth]{test-10-cochib-mauris}} \\
 		(c) & (d)
     \end{tabular}
-    \caption{Eingabe-Bild~(a); Extrahierte "Buchtaben"~(b); Alle "ipsum" markiert~(c) sowie alle "mauris" markiert~(d). (Wie erwartet kommt der Algorithmus hier an seine Grenzen; durch die stark ausgeprägten Serifen werden ganze Worte als einzelne Buchstaben erkannt.)}
+    \caption{Eingabe-Bild~(a); Extrahierte "Buchtaben"~(b); Alle "ipsum" markiert~(c) sowie alle "mauris" markiert~(d). (Wie erwartet kommt der Algorithmus hier an seine Grenzen; durch die stark ausgeprägten Serifen werden ganze Worte als einzelne Buchstaben erkannt. Für diesen Testfall wurde der \texttt{thresholdVal} -- für die initiale Schwellenwertbildung des Graustufenbildes -- von 80 auf 220 gesetzt, weil die Schrift so "dünn" ist; für alle anderen Tests hat der Schwellenwert von 80 sehr gute Ergebnisse geliefert.)}
     \label{fig:test-10}
 \end{figure}
 
