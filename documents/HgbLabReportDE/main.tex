@@ -24,7 +24,7 @@
 \ExecuteBibliographyOptions{backref=false} % Keine Rückreferenzen bei Quellen
 
 %%%-----------------------------------------------------------------------------
-\setcounter{chapter}{2}	% <----- Auf die Übungsnummer setzen
+\setcounter{chapter}{3}	% <----- Auf die Übungsnummer setzen
 %%%-----------------------------------------------------------------------------
 
 \author{Julian Jany}                        % Name
@@ -44,77 +44,14 @@
 
 %%%-----------------------------------------------------------------------------
 
-\section{OCR from scratch -- Basic implementation}
+\section{Richardson Lucy Deconvolution}
 
 \subsection{Problembeschreibung}
 
-Es soll ein \texttt{ImageJ OCR-Plugin} entwickelt werden. Das Plugin soll im ersten Schritt die einzelnen Buchstaben aus einem Bild extrahieren. Anschließend soll der Nutzer einen Referenzbuchstaben wählen können; alle diesem Referenzbuchstaben ähnlichen Buchstaben sollen im Text markiert werden.
+Es soll ein \texttt{ImageJ Plugin} entwickelt werden. 
+Das Plugin soll den iterativen Algorithmus \textit{Richardson Lucy Deconvolution} anwenden, und damit ein \zB unscharfes Bild "scharfstellen" können. 
 
 \subsection{Lösungsbeschreibung}
-
-\subsubsection{Schwellenwertbildung}
-
-Das jedem Pixel im Eingabe-Bild wird anhand eines Schwellenwerts einer von zwei Werten ('Vordergrung' / 'Hintergrund') zugewiesen, um die folgenden Verarbeitungsschritte zu vereinfachen.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{thresholding}
-\caption{Teil des Eingabe-Bildes vor (links) und nach (rechts) der Schwellenwertbildung}
-\label{fig:thresholding}
-\end{figure}
-
-\subsubsection{Extraktion der Buchstaben}
-
-Zur Extraktion der Buchstaben wird die sog. \textit{fire through} Methode angewandt. Im ersten Schritt wird der Text in seine einzelnen Zeilen aufgeteilt. Anschließend wird jede Zeile in die enthaltenen Buchstaben aufgeteilt. Abschließend wird die Bounding-Box jedes Buchstaben oben und unten "zugeschnitten"; auf diese Weise ist die Größe der Bounding-Boxen der Buchstaben unabhängig von den anderen Buchstaben in derselben Zeile.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{character_detection}
-\caption{Teil des Eingabe-Bildes, extrahierte Buchstaben sind hervorgehoben. (Bounding-Box: gelblich markiert; Umrandung außerhalb der Buchstaben: rötlich markiert)}
-\label{fig:character_detection}
-\end{figure}
-
-\subsubsection{Referenzbestimmung}
-
-Der Benutzer wählt einen Referenzbuchstaben durch Angabe von Zeilen- und Spaltennummer. Für den gewählten Buchstaben werden die implementierten Features berechnet und in einem Array gespeichert. Dieses Array dient als Referenzvektor zum Vergleichen der Buchstaben.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{ref_features}
-\caption{Gewählter Referenzbuchstabe mit den berechneten Feature-Werten.}
-\label{fig:ref_features}
-\end{figure}
-
-\subsubsection{Normalisierung}
-
-Alle Features weisen unterschiedliche Wertebereiche auf. Dies wird mittels Normalisierung vor der Berechnung des Korrelationskoeffizienten ausgeglichen. Es werden alle Feature-Werte für jeden Buchstaben im Bild berechnet. Anschließend wird je Feature das Arithmetische Mittel und die Standardabweichung gebildet. Die Normalisierung der Features eines konkreten Buchstaben erfolgt durch Subtraktion des jeweiligen Mittelwerts und durch Division durch die jeweilige Standardabweichung.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{norm_vect}
-\caption{Normalisierungs-Vektor.}
-\label{fig:norm_vect}
-\end{figure}
-
-\subsubsection{Korrelationskoeffizient}
-
-Für jeden Buchstaben im Bild wird die Korrelation mit dem Referenzbuchstaben berechnet. Die Berechnung des Korrelationskoeffizienten wird mit normalisierten Feature-Werten durchgeführt.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{correlation_coeff}
-\caption{Visualisierung der Korrelationskoeffizienten (0 entspricht -1; 255 entspricht +1).}
-\label{fig:correlation_coeff}
-\end{figure}
-
-Im letzten Schritt der OCR definiert der Nutzer einen Schwellenwert für den Korrelationskoeffizienten; alle Buchstaben die diesen Wert überschreiten werden im Bild markiert.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.85\textwidth]{recognized_chars}
-\caption{Visualisierung der erkannten Buchstaben (ähnlich zu 'f').}
-\label{fig:recognized_chars}
-\end{figure}
 
 \subsection{Implementierung}
 
