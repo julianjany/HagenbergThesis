@@ -61,26 +61,104 @@ Hier werden interessante Code-Teile der Implementierung inkludiert.
 
 \subsection{Tests}
 
+\subsubsection{Identische Kernel und kein Rauschen}
+
 \begin{figure}[h]
-\centering
-\includegraphics[width=.7\textwidth]{test-01-A}
-\caption{Alle 'A' im Bild markiert.}
-\label{fig:test-01}
+	\centering\small
+	\begin{tabular}{cc}
+		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{ex-01-bridge-input}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-01-bridge-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-01-bridge-rld-result}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{fig:ex-01-bridge}
 \end{figure}
 
 \begin{figure}[h]
-    \centering\small
-    \begin{tabular}{cc}
-        \FramePic{\includegraphics[width=0.5\textwidth]{comic_sans}} &
-        \FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic_mark}} \\
-        (a) & (b) \\
-		\FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic-m}} &
-        \FramePic{\includegraphics[width=0.5\textwidth]{test-09-comic-n}} \\
-		(c) & (d)
-    \end{tabular}
-    \caption{Eingabe-Bild~(a); Extrahierte Buchtaben~(b); Alle 'm' markiert~(c) sowie alle 'n' markiert~(d).}
-    \label{fig:test-09}
+	\centering\small
+	\begin{tabular}{cc}
+		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{ex-01-bridge-input}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-02-bridge-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-02-bridge-rld-result}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{fig:ex-02-bridge}
 \end{figure}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{heic1501a.jpg}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-03-pillars-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-03-pillars-rld-result}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{ex-03-pillars}
+\end{figure}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{opo1000a.jpg}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-04-galaxy-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-04-galaxy-rld-result}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{ex-04-galaxy}
+\end{figure}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{heic1501a.jpg}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-05-galaxy-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-05-galaxy-rld-result}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{ex-05-galaxy}
+\end{figure}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-04-galaxy-input}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-06-galaxy-rld-result-sharpened}} \\
+		(a) & (b)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{ex-06-galaxy}
+\end{figure}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		% \multicolumn{2}{c}{\FramePic{\includegraphics[width=0.7\textwidth]{STScI-01EVVD1G3V0B3TY7J779XY5W1F.jpg}}} \\
+		\multicolumn{2}{c}{(a)} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-07-deep-field-blurred}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{ex-07-deep-field-rld-reconstructed}} \\
+		(b) & (c)
+	\end{tabular}
+	\caption{Eingabe-Bild~(a); Gefiltertes Bild (Gauss; $\sigma=6.0$)~(b); Rekonstruiertes Bild~(c).}
+	\label{ex-07-deep-field}
+\end{figure}
+
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=.7\textwidth]{test-01-A}
+% \caption{Alle 'A' im Bild markiert.}
+% \label{fig:test-01}
+% \end{figure}
+
 
 \subsection{Diskussion}
 
