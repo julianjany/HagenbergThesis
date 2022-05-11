@@ -24,7 +24,7 @@
 \ExecuteBibliographyOptions{backref=false} % Keine Rückreferenzen bei Quellen
 
 %%%-----------------------------------------------------------------------------
-\setcounter{chapter}{3}	% <----- Auf die Übungsnummer setzen
+\setcounter{chapter}{4}	% <----- Auf die Übungsnummer setzen
 %%%-----------------------------------------------------------------------------
 
 \author{Julian Jany}                        % Name
@@ -38,55 +38,17 @@
 \maketitle
 %%%-----------------------------------------------------------------------------
 
-\lstset{language=[sharp]C,
+\lstset{language=Java,
 		basicstyle=\ttfamily\footnotesize,
 		keywordstyle=\color{blue}\ttfamily,
 		stringstyle=\color{red}\ttfamily,
 		commentstyle=\color[rgb]{0,0.608,0.333}\ttfamily, % ForestGreen
 		morecomment=[l][\color{magenta}]{\#}
 }
-\lstset{language=XML,
-		basicstyle=\ttfamily\footnotesize,
-		keywordstyle=\color{blue}\ttfamily,
-		stringstyle=\color{red}\ttfamily,
-		commentstyle=\color[rgb]{0,0.608,0.333}\ttfamily,
-		morecomment=[l][\color{magenta}]{\#}
-}
 
 %%%-----------------------------------------------------------------------------
 
-\section{One, to generate them all}
-
-\subsection{Lösungsidee}
-
-Das \texttt{Model.xml} wird mittels von .NET bereitgestellten Methoden geparst und in einen "Xml-Objektgraphen" transformiert. 
-Dieser Graph wird "depth-first" iteriert; dabei werden die Xml-Knoten/Elemente in ihre entsprechenden Sourcecode-Teile übersetzt.
-Über die Properties einer Klasse muss zweimal iteriert werden, um die Deklarationen der Properties und die ToString-Methode der Klasse generieren zu können.
-
-\subsection{Code}
-
-\lstinputlisting[caption=Model.xml, language={XML}]{src/ClassGenerator/Model.xml}
-\clearpage
-\lstinputlisting[caption=ClassGenerator.tt, language={[sharp]C}]{src/ClassGenerator/ClassGenerator.tt}
-\lstinputlisting[caption=ClassGenerator.cs (generated), language={[sharp]C}]{src/ClassGenerator/ClassGenerator.cs}
-\lstinputlisting[caption=Program.cs, language={[sharp]C}]{src/ClassGenerator/Program.cs}
-
-\clearpage
-
-\subsection{Test}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.5\textwidth]{class_gen_test}
-\caption{Testausgabe des ClassGenerator Projekts}
-\label{fig:class_gen_test}
-\end{figure}
-
-%%%-----------------------------------------------------------------------------
-
-\clearpage
-
-\section{Clone ‘Em All!}
+\section{Tracing}
 
 \subsection{Lösungsidee}
 
@@ -94,93 +56,213 @@ Gemeinsam in der Übung implementiert.
 
 \subsection{Code}
 
-\lstinputlisting[caption=A.cs, language={[sharp]C}]{src/CloningGenerator/A.cs}
-\lstinputlisting[caption=B.cs, language={[sharp]C}]{src/CloningGenerator/B.cs}
-\lstinputlisting[caption=CloningGenerator.tt, language={[sharp]C}]{src/CloningGenerator/CloningGenerator.tt}
-\lstinputlisting[caption=CloningGenerator.cs (generated), language={[sharp]C}]{src/CloningGenerator/CloningGenerator.cs}
-\lstinputlisting[caption=Program.cs, language={[sharp]C}]{src/CloningGenerator/Program.cs}
+\lstinputlisting[caption=Tracing.aj, language={Java}]{src/Tracing/src/main/java/aspects/Tracing.aj}
+\lstinputlisting[caption=Indentation.aj, language={Java}]{src/Tracing/src/main/java/aspects/Indentation.aj}
+\lstinputlisting[caption=PositiveValues.java, language={Java}]{src/Tracing/src/main/java/application/PositiveValues.java}
+\lstinputlisting[caption=Main.java, language={Java}]{src/Tracing/src/main/java/application/Main.java}
 
 \subsection{Test}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{cloning_gen_test}
-\caption{Testausgabe des CloningGenerator Projekts}
-\label{fig:cloning_gen_test}
+\includegraphics[width=.7\textwidth]{tracing-test-0}
+\caption{Testausgabe des Tracing Projekts}
+\label{fig:tracing-test-0}
 \end{figure}
 
 %%%-----------------------------------------------------------------------------
 
 \clearpage
 
-\section{SVG Generator}
+\section{Caching}
 
 \subsection{Lösungsidee}
 
-Für \texttt{Rectangles} und \texttt{Polylines} wurden die entsprechenden Generatoren, Shapes und Templates implementiert. Für die Implementierung der \texttt{Polyline} wurde zusätzlich die Klasse \texttt{Point2D} implementiert, welche Punkte in einem 2D-Koordinatensystem abbilden kann. Das Testen der Implementierung wurde so umgesetzt, dass eine \texttt{List} mit den auszuführenden Test-Mothoden erstellt wird; diese wird anschließend iteriert, die Test-Methode aufgerufen und das Ergebnis (SVG) im \texttt{outputs/} Ordner gespeichert.
-
 \subsection{Code}
 
-% generators
-\lstinputlisting[caption=DiagramGenerator.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/generators/DiagramGenerator.java}
-\lstinputlisting[caption=PointGenerator.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/generators/PointGenerator.java}
-\lstinputlisting[caption=PolylineGenerator.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/generators/PolylineGenerator.java}
-\lstinputlisting[caption=RectangleGenerator.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/generators/RectangleGenerator.java}
-
-\lstinputlisting[caption=Diagram.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/Diagram.java}
-
-% freemarker templates
-\lstinputlisting[caption=diagram.ftl, language={XML}]{src/DiagramGenerator/src/main/resources/templates/diagram.ftl}
-\lstinputlisting[caption=point.ftl, language={XML}]{src/DiagramGenerator/src/main/resources/templates/point.ftl}
-\lstinputlisting[caption=polyline.ftl, language={XML}]{src/DiagramGenerator/src/main/resources/templates/polyline.ftl}
-\lstinputlisting[caption=rectangle.ftl, language={XML}]{src/DiagramGenerator/src/main/resources/templates/rectangle.ftl}
-
-% shapes
-\lstinputlisting[caption=Point2D.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/shapes/helper/Point2D.java}
-\lstinputlisting[caption=Point.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/shapes/Point.java}
-\lstinputlisting[caption=Polyline.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/shapes/Polyline.java}
-\lstinputlisting[caption=Rectangle.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/shapes/Rectangle.java}
-
-\lstinputlisting[caption=Test.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/Test.java}
-\lstinputlisting[caption=Main.java, language={Java}]{src/DiagramGenerator/src/main/java/gp/Main.java}
-
-\clearpage
+\lstinputlisting[caption=BinomialCache.aj, language={Java}]{src/Caching/src/main/java/aspects/BinomialCache.aj}
+\lstinputlisting[caption=LogRecursiveCalls.aj, language={Java}]{src/Caching/src/main/java/aspects/LogRecursiveCalls.aj}
+\lstinputlisting[caption=RuntimeMeasurement.aj, language={Java}]{src/Caching/src/main/java/aspects/RuntimeMeasurement.aj}
+\lstinputlisting[caption=BinomialCoefficient.java, language={Java}]{src/Caching/src/main/java/application/BinomialCoefficient.java}
+\lstinputlisting[caption=Caching.java, language={Java}]{src/Caching/src/main/java/application/Caching.java}
 
 \subsection{Test}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{test-01}
-\caption{Gerenderter SVG-Output von \texttt{createBubbleChart()}}
-\label{fig:test-01}
+\includegraphics[width=.5\textwidth]{caching-test-00}
+\caption{Ausgabe Caching; Alle Advices deaktiviert}
+\label{caching-test-00}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{test-02}
-\caption{Gerenderter SVG-Output von \texttt{createBarChart()}}
-\label{fig:test-02}
+\includegraphics[width=.5\textwidth]{caching-test-01}
+\caption{Ausgabe Caching; \texttt{loggingEnabled}}
+\label{caching-test-01}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{test-03}
-\caption{Gerenderter SVG-Output von \texttt{createPoly()}}
-\label{fig:test-03}
+\includegraphics[width=.5\textwidth]{caching-test-02}
+\caption{Ausgabe Caching; \texttt{cachingEnabled}}
+\label{caching-test-02}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=.7\textwidth]{test-04}
-\caption{Gerenderter SVG-Output von \texttt{createFunctionGraph()}}
-\label{fig:test-04}
+\includegraphics[width=.5\textwidth]{caching-test-03}
+\caption{Ausgabe Caching; \texttt{runtimeMeasurementEnabled}}
+\label{caching-test-03}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=.7\textwidth]{test-05}
-\caption{Gerenderter SVG-Output von \texttt{createMultiple()}}
-\label{fig:test-05}
+\includegraphics[width=.5\textwidth]{caching-test-04}
+\caption{Ausgabe Caching; Alle Advices aktiviert}
+\label{caching-test-04}
+\end{figure}
+
+%%%-----------------------------------------------------------------------------
+
+\clearpage
+
+\section{Aspect-Oriented TSP Solver}
+
+\subsection{Lösungsidee}
+
+\subsection{Code}
+
+\lstinputlisting[caption=Pointcuts.aj, language={Java}]{src/TSP/src/main/java/aspects/Pointcuts.aj}
+\lstinputlisting[caption=CountEvaluatedSolutions.aj, language={Java}]{src/TSP/src/main/java/aspects/CountEvaluatedSolutions.aj}
+\lstinputlisting[caption=LimitEvaluatedSolutions.aj, language={Java}]{src/TSP/src/main/java/aspects/LimitEvaluatedSolutions.aj}
+\lstinputlisting[caption=Elitism.aj, language={Java}]{src/TSP/src/main/java/aspects/Elitism.aj}
+\lstinputlisting[caption=ProtocolProgress.aj, language={Java}]{src/TSP/src/main/java/aspects/ProtocolProgress.aj}
+\lstinputlisting[caption=TSPSolver.java, language={Java}]{src/TSP/src/main/java/tsp/TSPSolver.java}
+
+\clearpage
+
+\subsection{Test}
+
+\subsubsection{Zeitmessung und Zählen von Evaluierungs-Aufrufen}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-00}
+\caption{Ausgabe TSP-Solver; Alle Advices deaktiviert}
+\label{tsp-test-00}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-01}
+\caption{Ausgabe TSP-Solver; \texttt{MeasureRuntime} Advice aktiviert}
+\label{tsp-test-01}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-02}
+\caption{Ausgabe TSP-Solver; \texttt{CountEvaluatedSolutions} Advice aktiviert}
+\label{tsp-test-02}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-03}
+\caption{Ausgabe TSP-Solver; \texttt{LimitEvaluatedSolutions} Advice ($maximumEvaluations=1234$) aktiviert}
+\label{tsp-test-03}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-04}
+\caption{Ausgabe TSP-Solver; \texttt{MeasureRuntime}, \texttt{CountEvaluatedSolutions} und \texttt{LimitEvaluatedSolutions} ($maximumEvaluations=1234$) Advices aktiviert}
+\label{tsp-test-04}
+\end{figure}
+
+%----------------------------------------------------------------------------------------------------------------
+\subsubsection{Aufzeichnen des Qualitätsverlaufs}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.9\textwidth]{tsp-test-05}
+\caption{Ausgabe TSP-Solver; \texttt{ProtocolProgress} Advices (Anzahl der Iterationen wurde auf $2$ gesetzt um die Ausgabe kurz zu halten) aktiviert}
+\label{tsp-test-05}
+\end{figure}
+
+\begin{figure}[h]
+\centering\small
+\begin{tabular}{cc}
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-quality-10}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-10}} \\
+	(a) & (b) \\
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-quality-10}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-10}} \\
+	(c) & (d)
+\end{tabular}
+\caption{Ergebnisse bei 10 Iterationen: 'ch130' Qualitätsverlauf~(a); 'ch130' beste Tour~(b); 'kroA200' Qualitätsverlauf~(c) 'kroA200' beste Tour~(d).}
+\label{fig:tour-x-10}
+\end{figure}
+
+\begin{figure}[h]
+\centering\small
+\begin{tabular}{cc}
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-quality-1000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-1000}} \\
+	(a) & (b) \\
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-quality-1000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-1000}} \\
+	(c) & (d)
+\end{tabular}
+\caption{Ergebnisse bei 1000 Iterationen: 'ch130' Qualitätsverlauf~(a); 'ch130' beste Tour~(b); 'kroA200' Qualitätsverlauf~(c) 'kroA200' beste Tour~(d).}
+\label{fig:tour-x-1000}
+\end{figure}
+
+\begin{figure}[h]
+\centering\small
+\begin{tabular}{cc}
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-quality-10'000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-10'000}} \\
+	(a) & (b) \\
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-quality-10'000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-10'000}} \\
+	(c) & (d)
+\end{tabular}
+\caption{Ergebnisse bei 10000 Iterationen: 'ch130' Qualitätsverlauf~(a); 'ch130' beste Tour~(b); 'kroA200' Qualitätsverlauf~(c) 'kroA200' beste Tour~(d).}
+\label{fig:tour-x-10000}
+\end{figure}
+
+\begin{figure}[h]
+\centering\small
+\begin{tabular}{cc}
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-elite-quality-1000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-0-elite-1000}} \\
+	(a) & (b) \\
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-elite-quality-1000}} &
+	\FramePic{\includegraphics[width=0.45\textwidth]{tour-1-elite-1000}} \\
+	(c) & (d)
+\end{tabular}
+\caption{Ergebnisse bei 1000 Iterationen; \texttt{1-elitism} aktiviert : 'ch130' Qualitätsverlauf~(a); 'ch130' beste Tour~(b); 'kroA200' Qualitätsverlauf~(c) 'kroA200' beste Tour~(d).}
+\label{fig:tour-x-elite-1000}
+\end{figure}
+
+%----------------------------------------------------------------------------------------------------------------
+\clearpage
+\subsubsection{Beste Tour}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.55\textwidth]{tour-0-1'000'000}
+\caption{Beste tour für 'ch130' nach 1000000 Iterationen.}
+\label{fig:ch130-1000000}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.55\textwidth]{tour-1-1'000'000}
+\caption{Beste tour für 'kroA200' nach 1000000 Iterationen.}
+\label{fig:kroA200-1000000}
 \end{figure}
 
 %%%-----------------------------------------------------------------------------
