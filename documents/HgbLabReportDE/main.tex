@@ -61,6 +61,8 @@ Gemeinsam in der Übung implementiert.
 \lstinputlisting[caption=PositiveValues.java, language={Java}]{src/Tracing/src/main/java/application/PositiveValues.java}
 \lstinputlisting[caption=Main.java, language={Java}]{src/Tracing/src/main/java/application/Main.java}
 
+\clearpage
+
 \subsection{Test}
 
 \begin{figure}[h]
@@ -78,6 +80,10 @@ Gemeinsam in der Übung implementiert.
 
 \subsection{Lösungsidee}
 
+Alles bis auf den Aspekt \texttt{RuntimeMeasurement} wurde gemeinsam in der Übung implementiert.
+
+Bei der Umsetzung war zu beachten, dass -- wie schon bei \texttt{LogRecursiveCalls} -- nur der äußerste Aufruf von \texttt{BinomialCoefficient.calculate(...)} zum Pointcut gehört. Zudem wurde die Priorität so festgelegt, dass \texttt{RuntimeMeasurement} die niedrigste Priorität aufweist. Das bewirkt, dass nur die Laufzeit der Berechnung gemessen wird -- exklusive möglicher zusätzlicher Advices.
+
 \subsection{Code}
 
 \lstinputlisting[caption=BinomialCache.aj, language={Java}]{src/Caching/src/main/java/aspects/BinomialCache.aj}
@@ -85,6 +91,8 @@ Gemeinsam in der Übung implementiert.
 \lstinputlisting[caption=RuntimeMeasurement.aj, language={Java}]{src/Caching/src/main/java/aspects/RuntimeMeasurement.aj}
 \lstinputlisting[caption=BinomialCoefficient.java, language={Java}]{src/Caching/src/main/java/application/BinomialCoefficient.java}
 \lstinputlisting[caption=Caching.java, language={Java}]{src/Caching/src/main/java/application/Caching.java}
+
+\clearpage
 
 \subsection{Test}
 
@@ -130,6 +138,8 @@ Gemeinsam in der Übung implementiert.
 \section{Aspect-Oriented TSP Solver}
 
 \subsection{Lösungsidee}
+
+
 
 \subsection{Code}
 
