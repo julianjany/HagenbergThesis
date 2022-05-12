@@ -139,7 +139,21 @@ Bei der Umsetzung war zu beachten, dass -- wie schon bei \texttt{LogRecursiveCal
 
 \subsection{Lösungsidee}
 
+\subsubsection{CountEvaluatedSolutions}
 
+Nach jedem Aufruf von \texttt{Solution.evaluate()} wird eine interne Zählvariable inkrementiert. Nach jedem Aufruf von \texttt{Algorithm.execute()} wird dieser Zähler ausgegeben und zurückgesetzt.
+
+\subsubsection{LimitEvaluatedSolutions}
+
+Dieser Aspekt erweitert den Aspekt \texttt{CountEvaluatedSolutions}. Der Zähler des Basis-Aspekts wird verwendet um das Abbruchkriterium des Algorithmus zu verändern. Es wird ein Around-Advice implementiert welcher das Ergebnis von \texttt{Algorithm.isTer\-mi\-na\-ted()} verändert; \texttt{Algorithm.isTerminated()} soll \texttt{true} liefern, wenn der Rückgabewert des tatsächlichen Aufrufs \texttt{true} liefert (inklusiv-) oder die Maximalanzahl an Evaluierungen erreicht ist. Der Algorithmus wird also nicht sofort abgebrochen, wenn die Maximalanzahl an Evaluierungen erreicht wurde, sondern es werden -- wie in der Angabe gefordert -- die Evaluierungen der aktuellen Iteration abgeschlossen.
+
+\subsubsection{Elitism}
+
+Es wird ein Around-Advice implementiert welcher den Übergabe-Parameter -- \texttt{Solu\-tion[] children} -- an \texttt{GA.replace(..)} verändert. Die schlechteste Solution der neuen Population wird durch die aktuell beste Solution ersetzt.
+
+\subsubsection{ProtocolProgress}
+
+Es werden zwei Advices implementiert; einer welcher nach jedem Aufruf von \texttt{Algorithm\-.\-initialize()} oder \texttt{Algorithm.iterate()} Statistiken über die aktuelle Population sammelt und ein weiterer welcher nach jedem Aufruf von \texttt{Algorithm.execute()} die gesammelten Statistiken in verschiedenen Formen ausgibt/visualisiert und danach die Collection der Statistiken leert. Bei der Implementierung ist zu beachten, dass innerhalb der Advices der Zugriff auf den \texttt{GA} bzw. die \texttt{population} möglich sein muss. Eine Möglichkeit das umzusetzen ist, bei den entsprechenden Pointcuts \texttt{target(ga)} anzugeben. Falls Zugriff auf private Member/Methoden benötigt wird, muss der Aspekt als \texttt{privileged} deklariert werden.
 
 \subsection{Code}
 
