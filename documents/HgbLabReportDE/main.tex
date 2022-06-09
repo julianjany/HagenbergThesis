@@ -78,6 +78,19 @@ Es werden bewussts einzelne Standbilder anstelle eines Videos aufgenommen; mit d
 \subsubsection{Vorverarbeitung}
 
 Die aufgenommenen \texttt{RAW} Bilder werden in einem \texttt{RAW-Converter} vorverarbeitet. 
+Abb. \ref{input_imgs} zeigt vier der insgesamt 69 zur Rekonstruktion aufgenommenen Bilder.
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{cc}
+		\FramePic{\includegraphics[width=0.45\textwidth]{_DSF1534-1.png}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{_DSF1537-1.png}} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{_DSF1545-1.png}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{_DSF1569-1.png}}
+	\end{tabular}
+	\caption{Ein Auszug der zur Rekonstruktion aufgenommenen Bilder.}
+	\label{input_imgs}
+\end{figure}
 
 \clearpage
 
@@ -140,21 +153,31 @@ Wenn das Mesh keine zugehörige UV hat, berechnet er automatisch UV-Maps.
 Für jedes Dreieck verwendet er die Sichtbarkeitsinformationen, die mit jedem Scheitelpunkt verbunden sind, um die Texturkandidaten zu finden. Es wählt die besten Kameras auf der Grundlage der das Dreieck abdeckenden Auflösung aus. Schließlich werden die Pixelwerte unter Verwendung mehrerer Bänder im Frequenzbereich gemittelt. Viele Kameras tragen zu den niedrigen Frequenzen bei und nur die besten tragen zu den hohen Frequenzen bei.
 
 
+
 \clearpage
 
-\subsection{Tests}
+\subsection{Ergebnis}
+
+\begin{figure}[h]
+	\centering\small
+	\begin{tabular}{c}
+		\FramePic{\includegraphics[width=0.7\textwidth]{reconstructed_05_comparison.png}} \\
+		\FramePic{\includegraphics[width=0.7\textwidth]{reconstructed_06_comparison.png}}
+	\end{tabular}
+	\caption{Zwei Perspektiven welche jeweils das digitale Ausgangsmodell (grün) und des rekonstruierte Modell (orange) zeigen.}
+	\label{example02}
+\end{figure}
 
 \begin{figure}[h]
 	\centering\small
 	\begin{tabular}{cc}
-		\multicolumn{2}{c}{\FramePic{\includegraphics[width=0.4\textwidth]{ex-10-lena-orig}}} \\
-		\multicolumn{2}{c}{(a)} \\
-		\FramePic{\includegraphics[width=0.45\textwidth]{ex-16-lena-blur}} &
-		\FramePic{\includegraphics[width=0.45\textwidth]{ex-16-lena-rld}} \\
-		(b) & (c)
+		\FramePic{\includegraphics[width=0.45\textwidth]{reconstructed_01.png}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{reconstructed_02.png}} \\
+		\FramePic{\includegraphics[width=0.45\textwidth]{reconstructed_03.png}} &
+		\FramePic{\includegraphics[width=0.45\textwidth]{reconstructed_04.png}}
 	\end{tabular}
-	\caption{Eingabe-Bild~(a); Gefiltertes Bild (21x1 Mean)~(b); Rekonstruiertes Bild~(c); Anzahl-Iterationen: 100; Erwartetes Ergebnis: Rekonstruktion von Bilddetails; Ergebnis: Einige Bilddetails können wieder hergestellt, es sind allerdings Artefakte erkennbar (Doppelbilder).}
-	\label{ex-15-lena}
+	\caption{Mehrere Perspektiven welche jeweils das rekonstruierte Modell zeigen.}
+	\label{example01}
 \end{figure}
 
 % ---------------------------------------------------------------
