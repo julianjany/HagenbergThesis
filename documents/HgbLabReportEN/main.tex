@@ -50,6 +50,17 @@ If you write in MS Word (and such), try to use a similar structure.
 
 \section{Motivation}
 
+The majority of imaging devices utilize only a single image sensor. This inherently results in a one-dimensional signal. To enable mutli-spectral imaging a Color Filter Array (CFA) is placed on top of the sensor array. Typically the CFA is implemented as a repeating pattern of three different filters. The most popular CFA is the Bayer CFA (ref) (see Fig. \ref{fig:bayer_cfa}).
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=0.35\textwidth]{bayer_pattern}
+\caption{Image sensor array partially covered by a Bayer CFA.}
+\label{fig:bayer_cfa}
+\end{figure}
+
+Demosaicing is the process of reconstructing the two missing color channel signals for every sensel to form a "full color" image. This is usually one of the first stages of a digital imaging pipeline and has a significant influence on the quality of the final image.
+
 \section{Objectives} % "Ziele"
 
 \section{Tasks}
