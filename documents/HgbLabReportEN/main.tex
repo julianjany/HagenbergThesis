@@ -95,6 +95,8 @@ The final thesis is handed in by \textbf{June 26, 2023} at the latest.
 
 Mittal et al. 2013 \cite{Mittal2013} introduced a blind image quality assessment model. Unlike the quality metrics commonly used to compare demosaicing algorithms -- such as the Color Peak Signal-to-Noise Ratio (CPSNR) \cite{Menon2011} -- the proposed Natural Image Quality Evaluator (NIQE) does not require full-color reference images. NIQE can be used to evaluate the demosaicing quality for full-resolution images for which no full-color reference image exists. This is the case for all photos taken with consumer cameras, since the JPEG output of the camera or raw-processor itself inherently contains demosaicing artifacts.
 
+Menon et al. 2011 \cite{Menon2011} provide a comprehensive overview of classical demosaicing approaches.
+
 Gharbi et al. 2016 \cite{Gharbi2016} were the first to apply a data-driven approach on the demosaicing problem. They used convolutional neural networks trained on "real" images to restore the missing data. The proposed approach showed qualitative improvements over the state-of-the-art on a variety of test sample sets. Additionally, they have shown that the traditional approach of separating demosaicing and denoising as sequential steps in the image processing pipeline is suboptimal.
 
 Ronneberger et al. 2015 \cite{Ronneberger2015} proposed the U-Net for biomedical image segmentation. The network architecture has since produced great results in various different domains. An adapted U-Net is a promising candidate for one of the prototypes.
