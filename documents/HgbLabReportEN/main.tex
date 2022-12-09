@@ -50,7 +50,10 @@
 
 \section{Motivation}
 
-The majority of imaging devices utilize only a single image sensor, resulting in an inherently one-dimensional signal. To enable multi-spectral imaging, a \emph{Color Filter Array (CFA)} is placed on top of the sensor array. Typically, the CFA is implemented as a repeating pattern of three different filters. The most popular CFA is the \emph{Bayer CFA} (see Fig. \ref{fig:bayer_cfa}).
+The majority of imaging devices utilize only a single image sensor, resulting in an inherently one-dimensional signal. 
+To enable multi-spectral imaging, a \emph{Color Filter Array (CFA)} is placed on top of the sensor array. 
+Typically, the CFA is implemented as a repeating pattern of three different filters. 
+The most popular CFA is the \emph{Bayer CFA} (see Fig. \ref{fig:bayer_cfa}).
 
 \begin{figure}[]
 	\centering
@@ -59,7 +62,9 @@ The majority of imaging devices utilize only a single image sensor, resulting in
 \label{fig:bayer_cfa}
 \end{figure}
 
-Demosaicing is the process of reconstructing the two missing color channel signals for each sensel of the sensor to obtain a "full-color" image. This is usually one of the first stages of a digital imaging pipeline and significantly impacts the quality of the final image. Capturing high-quality, high-resolution images is of great interest to both research and industry. % Trinity of Pixel Enhancement: a Joint Solution for Demosaicking, Denoising and Super-Resolution
+Demosaicing is the process of reconstructing the two missing color channel signals for each sensel of the sensor to obtain a "full-color" image. 
+This is usually one of the first stages of a digital imaging pipeline and significantly impacts the quality of the final image. 
+Capturing high-quality, high-resolution images is of great interest to both research and industry. % Trinity of Pixel Enhancement: a Joint Solution for Demosaicking, Denoising and Super-Resolution
 
 \section{Objectives} % "Ziele"
 
@@ -69,7 +74,8 @@ The introduction of the master's thesis is intended to provide a detailed summar
 
 \subsection{Analysis}
 
-The following chapter of the thesis represents a thorough analysis of several state-of-the-art demosaicing algorithms. Findings from this analysis are used to identify potential for improvement in specific aspects.
+The following chapter of the thesis represents a thorough analysis of several state-of-the-art demosaicing algorithms. 
+Findings from this analysis are used to identify potential for improvement in specific aspects.
 
 \noindent
 Possible improvement aspects:
@@ -85,7 +91,8 @@ Possible improvement aspects:
 
 \subsection{Prototypes}
 
-Based on this assessment, multiple prototypes are developed, and it is determined whether significant improvements in the targeted aspects are achievable. The prototypes are thoroughly analyzed and compared with their respective reference algorithm.
+Based on this assessment, multiple prototypes are developed, and it is determined whether significant improvements in the targeted aspects are achievable. 
+The prototypes are thoroughly analyzed and compared with their respective reference algorithm.
 
 \section{Tasks}
 
@@ -132,15 +139,24 @@ The final thesis is handed in by \textbf{June 26, 2023} at the latest.
 
 \section{Relevant Literature}
 
-Mittal et al. (2013) \cite{Mittal2013} introduced a model for blind evaluation of image quality. Unlike the quality metrics commonly used to compare demosaicing algorithms -- such as the Color Peak Signal-to-Noise Ratio (CPSNR) \cite{Menon2011} -- the proposed Natural Image Quality Evaluator (NIQE) does not require full-color reference images. NIQE can be used to evaluate the demosaicing quality for full-resolution images for which no full-color reference image exists. This is the case for all photographs taken with consumer cameras, since the JPEG output of the camera or raw-processor itself inherently contains demosaicing artifacts.
+Mittal et al. (2013) \cite{Mittal2013} introduced a model for blind evaluation of image quality. 
+Unlike the quality metrics commonly used to compare demosaicing algorithms -- such as the Color Peak Signal-to-Noise Ratio (CPSNR) \cite{Menon2011} -- the proposed Natural Image Quality Evaluator (NIQE) does not require full-color reference images. 
+NIQE can be used to evaluate the demosaicing quality for full-resolution images for which no full-color reference image exists. 
+This is the case for all photographs taken with consumer cameras, since the JPEG output of the camera or raw-processor itself inherently contains demosaicing artifacts.
 
 Menon et al. (2011) \cite{Menon2011} provide a comprehensive overview of classical demosaicing approaches.
 
-Gharbi et al. (2016) \cite{Gharbi2016} were the first to apply a data-driven approach to the demosaicing problem. They used convolutional neural networks trained on "real" images to restore the missing data. The proposed approach showed qualitative improvements over the state-of-the-art on various data sets. Additionally, they have shown that the traditional approach of separating demosaicing and denoising as sequential steps in the image processing pipeline is suboptimal.
+Gharbi et al. (2016) \cite{Gharbi2016} were the first to apply a data-driven approach to the demosaicing problem. 
+They used convolutional neural networks trained on "real" images to restore the missing data. 
+The proposed approach showed qualitative improvements over the state-of-the-art on various data sets. 
+Additionally, they have shown that the traditional approach of separating demosaicing and denoising as sequential steps in the image processing pipeline is suboptimal.
 
-Ronneberger et al. (2015). \cite{Ronneberger2015} proposed the U-Net for biomedical image segmentation. The network architecture has since produced excellent results in various different domains. An adapted U-Net is a promising candidate for one of the prototypes.
+Ronneberger et al. (2015) \cite{Ronneberger2015} proposed the U-Net for biomedical image segmentation. 
+The network architecture has since produced excellent results in various different domains. 
+An adapted U-Net is a promising candidate for one of the prototypes.
 
-Kim et al. (2020). \cite{Kim2020} demonstrate an innovative demosaicing algorithm that builds on prior work in multiple fields. Their approach yields outstanding results for the challenging Quad Bayer CFA.
+Kim et al. (2020) \cite{Kim2020} demonstrate an innovative demosaicing algorithm that builds on prior work in multiple fields. 
+Their approach yields outstanding results for the challenging Quad Bayer CFA.
 
 %%%-----------------------------------------------------------------------------
   
