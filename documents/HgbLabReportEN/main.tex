@@ -29,7 +29,7 @@
 
 \author{Julian Emanuel Jany}                     % Your name
 \title{Evaluation and identification of the optimization potential of modern demosaicing algorithms \\ % Name of the course
-			 Exposé}
+			 \textbf{Exposé}}
 \date{\today}
 
 %%%-----------------------------------------------------------------------------
@@ -54,18 +54,46 @@ The majority of imaging devices utilize only a single image sensor. This inheren
 
 \begin{figure}[]
 	\centering
-	\includegraphics[width=0.35\textwidth]{bayer_pattern}
+	\includegraphics[width=0.3\textwidth]{bayer_pattern}
 \caption{Image sensor array partially covered by a Bayer CFA. \cite{BayerCFA}}
 \label{fig:bayer_cfa}
 \end{figure}
 
-Demosaicing is the process of reconstructing the two missing color channel signals for every sensel to form a "full color" image. This is usually one of the first stages of a digital imaging pipeline and has a significant influence on the quality of the final image.
+Demosaicing is the process of reconstructing the two missing color channel signals for every sensel to form a "full color" image. This is usually one of the first stages of a digital imaging pipeline and has a significant influence on the quality of the final image. Capturing high-quality, high-resolution images is of great interest to both research and industry. % Trinity of Pixel Enhancement: a Joint Solution for Demosaicking, Denoising and Super-Resolution
 
 \section{Objectives} % "Ziele"
 
+\subsection{Summary and Introduction}
+
+The introduction of the master's thesis is intended to provide a detailed summary of related work and a comprehensive introduction to the state of the art in demosaicing.
+
+\subsection{Analysis}
+
+The following chapter of the thesis represents a thorough analysis of one or more state-of-the-art demosaicing algorithms. The results of this analysis are used to identify potential for improvement in specific domains.
+
+\noindent
+Possible improvement domains:
+
+\begin{itemize}
+	\item Runtime performance
+	\item Memory footprint
+	\item Efficiency
+	\item Artifact reduction (e.g. moiré, false color)
+	\item Quality metrics (e.g. CPSNR)
+	\item Visual/perceptual quality
+\end{itemize}
+
+\subsection{Prototypes}
+
+Based on this assessment, multiple prototypes are developed and it is determined whether improvements in the target domain are actually achievable. The prototypes are thoroughly analyzed and compared with their respective reference algorithm.
+
 \section{Tasks}
 
+
+
 \section{Research Questions}
+
+% Vorgehensweise
 
 \section{Organizational Details}
 
